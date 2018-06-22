@@ -1,0 +1,26 @@
+drop function func_name(minutes int)
+///
+
+create function func_name(minutes int)
+returns varchar
+as $$
+declare 
+good varchar(30);
+during varchar(30);
+begin
+during :=cast(trunc(minutes/60)as varchar)||':'||trim(to_char(minutes %60,'00'));
+case 
+when minutes>100 then good := 'good';
+else good := 'bad';
+end case;
+return during||'  '||good;
+end;
+$$ language plpgsql
+///
+
+select departure, arrival, duration, func_name(duration)
+from flights
+order by random()
+limit 10
+///
+

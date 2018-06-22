@@ -1,0 +1,1 @@
+select round(avg(curr.cal),1) from (select count(*) as cal from credits where credited_as = 'A' group by movieid) as curr;
